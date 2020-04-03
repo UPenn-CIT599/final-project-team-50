@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author feihan2020
+ * @author feihan
  * The class takes user input and randomly generates
  * exits locations on the floor plan
  * 
