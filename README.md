@@ -2,13 +2,14 @@
 Team Member: Chi Zhang, Fei Han, Yao Yao
 
 Class:
-	floorPlan
-	exit
-	person
-	simulation
+	FloorPlan
+	Exit
+	Person
+	Planner
+	Simulation(main)
 	
 Input:
-	Amount/Location of person and wall
+	Amount of people and wall
 	
 Output:
-	Shortest distance the last person exit.
+	The time it will take for everyone exit the floor
