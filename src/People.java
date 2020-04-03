@@ -1,5 +1,5 @@
 /**
- * @author feihan
+ * @author feihan2020
  * The class tracks location,speed, direction of a person
  */
 
