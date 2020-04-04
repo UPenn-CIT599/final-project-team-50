@@ -113,7 +113,7 @@ public class FloorPlan {
     		int next = random.nextInt(total);
     		int r = next / size;
     		int c = next % size;
-    		if(floorPlan[r][c] != 0) {
+    		if(floorPlan[r][c] == 0) {
     			floorPlan[r][c] = 3;
     			numPeople--;
     		}
