@@ -42,6 +42,7 @@ public class Exit {
 		 Collections.shuffle(randomList);
 
 		 //then take the first numExits for exits' location consideration
+		 //numbering based on clockwise. The upper left being (1,1) 
 		for(int i=1;i<=numExit;i++) {
 			int temp=randomList.get(i);
 			
@@ -49,23 +50,23 @@ public class Exit {
 			
 			if(temp<=(FloorSize-1)) {
 				
-				int[] arr= {FloorSize,temp};
+				int[] arr= {1,temp};
 				ExitLocations.add(i,arr);
 				
 			}else if(temp<=(2*FloorSize-2)) {
 				
-				int[] arr= {2*FloorSize-temp,FloorSize};
+				int[] arr= {temp-FloorSize+1,FloorSize};
 				
 				ExitLocations.add(i,arr);
 
 			}else if(temp<=(3*FloorSize-3)) {
 				
-				int[] arr= {1,3*FloorSize-temp-1};
+				int[] arr= {FloorSize,3*FloorSize-temp-1};
 				ExitLocations.add(i,arr);
 				
 			}else {
 				
-				int[] arr= {1,temp-FloorSize*2};
+				int[] arr= {4*FloorSize-temp-2,1};
 				ExitLocations.add(i,arr);
 			}
 		
