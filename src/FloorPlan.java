@@ -70,7 +70,7 @@ public class FloorPlan {
 		return size;
 	}
 
-	public int [][] getWalls() {
+	public int [][] getfloorPlan() {
 		return floorPlan;
 	}
 	
