@@ -1,5 +1,8 @@
 
+import java.awt.Point;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author yao16
@@ -8,20 +11,26 @@ import java.util.HashMap;
  */
 public class Planner {
 	private FloorPlan floor;
+	private UserInput userDefine;
 	
 	public Planner(FloorPlan f) {
 		floor = f;
 	}
 	
 	/**using BREADTH-FIRST SEARCH
-	 * @param location of exit+
+	 * @param location of exit
 	 * This method will take the location of one exit and generate a 2D array
 	 * to store the distance between this exit to all the available location (not a wall) on a floor map. 
 	 */
-	public int[][] getDistanceWithWall(Exit e) {
+	public int[][] getDistanceWithWall(int r, int c) {
 		int[][] distanceWithWall = new int[floor.getSize()][floor.getSize()];
-
-		//implement the method;
+		Point point = new Point(r,c);		
+		Queue<Integer[]> queue = new LinkedList<>();
+		
+		
+		
+		
+		
 		
 		return distanceWithWall;
 	}
@@ -54,7 +63,7 @@ public class Planner {
 	 * This method will take everyone on the floor and sorted them by their distance to the target exit.
 	 */
 	public Person[] movePriority(Person[] allPeople) {
-		Person[] sortedPeople = new Person[floor.getPeople().size()];
+		Person[] sortedPeople = new Person[userDefine.numberOfPeople()];
 		
 		//implement the method
 		
