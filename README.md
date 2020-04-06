@@ -27,6 +27,7 @@ Scan user input of a) number of people and b) number of exit
 - Location (Point)
 - Name (String)
 - Color (color) - for the further use of Swing
+1. Random generate the exit location(argument is Number of exit input by user, return void)
 
 *Person:
 - Location (Point)
@@ -39,9 +40,8 @@ Scan user input of a) number of people and b) number of exit
 - Exits (Exit[])
 - People (Person[])
 1. Set up the floor design with wall placed (no argument, return void)
-2. Random generate the exit location(argument is Number of exit input by user, return void)
-3. Locate people (argument is the Number of people input by user, return void)
-4. Traverse the floor and check if any people on the floor
+2. Locate people (argument is the Number of people input by user, return void)
+3. Traverse the floor and check if any people on the floor
 
 *Planner:
 -Floor (FloorPlan)
