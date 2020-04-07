@@ -5,6 +5,13 @@ import java.util.Random;
 
 public class FloorPlan {
 	
+	/*in the ArrayList floorPlan
+	 * void = 0
+	 * wall = 1
+	 * exit = 2
+	 * people = 3
+	 */
+	
 	public int maxExit = 8;
 	
 	//size = 3n+1 (n >= 10)
@@ -13,7 +20,7 @@ public class FloorPlan {
 	private Exit exit;
 	
 	
-	public void floorPlan(int k, Exit exits) {
+	public FloorPlan(int k, Exit exits) {
 		this.size = k;
 		this.exit = exits;
 		this.floorPlan = new int [size][size];
@@ -57,6 +64,7 @@ public class FloorPlan {
 			}
 		}
 		
+		//Save the exit in from Exit class in to floorPlan ArrayList
 		ArrayList<int[]> exitLocations = exit.getExits();
 		for(int[] point: exitLocations) {
 			int r = point[0];
@@ -81,15 +89,15 @@ public class FloorPlan {
 	public void setExit(Exit exit) {
 		this.exit = exit;
 	}
-
+    //make sure the rows and columns are inbound and valid
 	public boolean inbound(int r, int c) {
 		return (r>=0)&&(r<size)&&(c>=0)&&(c<size);
 	}
-
+    //check if there is people at (r,c)
     public boolean hasPeopleAt(int r, int c) {
     	return floorPlan[r][c] == 3;
     }
-    
+    //to get the maxpeople according to size
     public int getMaxPeople () {
     	int maxNumPeople = 0;
     	for(int i = 0; i < size; i++) {
@@ -102,8 +110,8 @@ public class FloorPlan {
     	return maxNumPeople;
     	
     }
-    
-    public boolean locatePeople(int numPeople, int size) {
+    //to distrbute people on the floorplan's void space randomly
+    public boolean locatePeople(int numPeople) {
     	int max = getMaxPeople();
     	if(numPeople > max)
     		return false;

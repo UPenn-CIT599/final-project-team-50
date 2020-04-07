@@ -16,7 +16,7 @@ class PersonTester {
 		
 		int[] location = new int[]{1, 2};
 		
-		People num1 = new Person(1,1.0,location);
+		Person num1 = new Person(1,1.0,location);
 		
         assertTrue(num1.getLocation() == location);
     }
