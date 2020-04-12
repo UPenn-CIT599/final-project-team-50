@@ -1,5 +1,4 @@
 
-import java.awt.Point;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -22,16 +21,44 @@ public class Planner {
 	 * This method will take the location of one exit and generate a 2D array
 	 * to store the distance between this exit to all the available location (not a wall) on a floor map. 
 	 */
-	public int[][] getDistanceWithWall(int r, int c) {
-		int[][] distanceWithWall = new int[floor.getSize()][floor.getSize()];
-		Point point = new Point(r,c);		
-		Queue<Integer[]> queue = new LinkedList<>();
+
+	public int[][] getDistanceWithWall(int[] oneExit) {	
+		int h=floor.getSize();
+		if(h==0)
+			return null;
+		int l=floor.getSize();
+		boolean[][] visited = new boolean[h][l];
+		int[][] distanceWithWall = new int[h][l];
+		Queue<int[]> queue = new LinkedList<>();
 		
-		
-		
-		
-		
-		
+		queue.add(oneExit);
+		int distance=0;
+		while(!queue.isEmpty()) {
+			int[] curVertex = queue.remove();
+			int row = curVertex[0];
+			int col = curVertex[1];
+			int[]leftVertex = {row,col-1};
+			int[]rightVertex = {row,col+1};
+			int[]upVertex = {row-1,col};
+			int[]downVertex = {row+1,col};
+			
+			if (row < 0 || col < 0 || row >= h || col >= l || visited[row][col])
+                continue;
+			
+			visited[row][col]=true;
+			if(floor.getfloorPlan()[row][col]==1) {
+				distanceWithWall[row][col]=-1; // if there is a wall on that point, then the distance return -1.
+			}
+			else {
+				distanceWithWall[row][col]=distance;
+				distance++;
+			}
+				
+			queue.add(leftVertex); //go left
+            queue.add(rightVertex); //go right
+            queue.add(upVertex); //go up
+            queue.add(downVertex); //go down		
+		}		
 		return distanceWithWall;
 	}
 	/**
