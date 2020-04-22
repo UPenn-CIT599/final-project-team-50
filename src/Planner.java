@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -11,9 +12,11 @@ import java.util.Queue;
 public class Planner {
 	private FloorPlan floor;
 	private UserInput userDefine;
+	private Exit exit;
 	
-	public Planner(FloorPlan f) {
-		floor = f;
+	public Planner() {
+		exit = new Exit();
+		floor = new FloorPlan(userDefine.getFloorSize(),exit);		
 	}
 	
 	/**using BREADTH-FIRST SEARCH
@@ -61,15 +64,42 @@ public class Planner {
 		}		
 		return distanceWithWall;
 	}
+	
+	//A helper method to store all the people on the floor in an ArrayList
+	private ArrayList<Person> buildPeopleArray(){
+		ArrayList<Person> people = new ArrayList<>();		
+		if(!floor.locatePeople(userDefine.getNumberOfPeople())) {
+			System.out.println("The number of people exceeds the maximum");
+			userDefine.setNumberOfPeople();
+		}
+		else {
+			int s = floor.getSize();
+			int personID = floor.getMaxPeople();
+			for(int r=0;r<s;r++) {
+				for(int c=0;c<s;c++) {
+					if (floor.getfloorPlan()[r][c]==3) {
+						int []initialLocation = {r,c};				
+						Person p = new Person(personID--,1,initialLocation);
+						people.add(p);
+					}
+				}
+			}
+		}	
+		return people;
+	}
+
+
 	/**
 	 * @param A person
 	 * This method will take all people on the floor and return a HashMap outline closest exit each person should go
 	 */
-	public HashMap<Person, Exit> closestExit(Person[] people) {
-			
+	public HashMap<Person, Exit> closestExit() {
+		ArrayList<Person> people = buildPeopleArray();
+		
 		HashMap<Person, Exit> personToExit = new HashMap<Person, Exit>(); 
 		
-		//implement the method build person-exit pair
+			}
+		}
 		
 		return personToExit;
 	}
