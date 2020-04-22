@@ -12,7 +12,7 @@ import java.util.List;
 public class Exit {
 	 //int numExit;//user input
 	 //int FloorSize;//defined in simulation class
-	 ArrayList<int[]> ExitLocations;
+	 private ArrayList<int[]> ExitLocations;
 	 
 	 //constructor
 	 public Exit() {
@@ -32,7 +32,7 @@ public class Exit {
 	  * 
 	  */
 	 
-	 void locationGenerator(int numExit, int FloorSize) {
+	public void locationGenerator(int numExit, int FloorSize) {
 		 
 		 //first randomly shuffle all possible outcomes between 1~4k-4
 		 List<Integer> randomList = new ArrayList<>();
@@ -45,8 +45,7 @@ public class Exit {
 		 //numbering based on clockwise. The upper left being (1,1) 
 		for(int i=1;i<=numExit;i++) {
 			int temp=randomList.get(i);
-			
-			
+					
 			
 			if(temp<=(FloorSize-1)) {
 				
@@ -77,12 +76,11 @@ public class Exit {
 		 
 
 	 }
-	 
-	 //return location for exits
-	 public ArrayList<int[]> getExits() {
-	        return this.ExitLocations;
-	    }
-		 
+	
+	//return location for exits
+	 public ArrayList<int[]> getExitLocations() {
+		return ExitLocations;
+	}
 	
 
 }

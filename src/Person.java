@@ -7,20 +7,35 @@ public class Person {
 
 	 int ID;
 	 double speed;
-	 String Direction;
-	 int[] LocationTracker=new int[2];//two numbers to track ppl's location (row and column axis)
+	 String Direction;	
 	 int totalDistance;
 	 double totalTime;
+	 
+	 private int[] Location=new int[2];//two numbers to track ppl's location (row and column axis)
+	 private int distanceToExit;
+	 
+	 public void setDistanceToExit(int distanceToExit) {
+		this.distanceToExit = distanceToExit;
+	}
+
+
+	public int getDistanceToExit() {
+		return distanceToExit;
+	}
+
+
+	
 	 
 	//constructor
 	 Person(int ID, double speed, int[] initialLocation) {
 		 this.ID=ID;
 		 this.speed=speed;
 		 //this.Direction=Direction;
-		 this.LocationTracker=initialLocation;
+		 this.Location=initialLocation;
 		 this.Direction = "NORTH";//defaults as up/north
 		 this.totalDistance=0;
 		 this.totalTime=0.0;
+		 this.distanceToExit=0;
 
 	 }
 
@@ -96,17 +111,17 @@ public class Person {
 		 
 		 if(moveDirection.toUpperCase().equals("NORTH")) {
 			 
-			 LocationTracker[1]=LocationTracker[1]-distance;
+			 Location[1]=Location[1]-distance;
 			
 		 }else if(moveDirection.toUpperCase().equals("SOUTH")) {
 			 
-			 LocationTracker[1]=LocationTracker[1]+distance;
+			 Location[1]=Location[1]+distance;
 		 }else if(moveDirection.toUpperCase().equals("WEST")){
-			 LocationTracker[2]=LocationTracker[2]-distance;
+			 Location[2]=Location[2]-distance;
 			 
 		 }else if(moveDirection.toUpperCase().equals("EAST")){
 			 
-			 LocationTracker[2]=LocationTracker[2]+distance;
+			 Location[2]=Location[2]+distance;
 		 }
 		 
 		 
@@ -117,7 +132,7 @@ public class Person {
 	 //get location
 	 
 	  public int[] getLocation() {
-	        return this.LocationTracker;
+	        return this.Location;
 	    }
 }
 	

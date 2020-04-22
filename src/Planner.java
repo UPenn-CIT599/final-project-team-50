@@ -1,7 +1,9 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.Queue;
 
 /**
@@ -12,11 +14,42 @@ import java.util.Queue;
 public class Planner {
 	private FloorPlan floor;
 	private UserInput userDefine;
-	private Exit exit;
+	private Exit exits;
+	private ArrayList<Person> people;
 	
 	public Planner() {
-		exit = new Exit();
-		floor = new FloorPlan(userDefine.getFloorSize(),exit);		
+		exits = new Exit();
+		exits.locationGenerator(userDefine.getNumberOfExits(), userDefine.getFloorSize());
+		floor = new FloorPlan(userDefine.getFloorSize(), exits);
+		people = buildPeopleArray();
+	}
+
+	// method to store all the people on the floor in an ArrayList
+	private ArrayList<Person> buildPeopleArray() {
+		ArrayList<Person> people = new ArrayList<>();
+		while (!floor.locatePeople(userDefine.getNumberOfPeople())) {
+			System.out.println("The number of people exceeds the maximum");
+			userDefine.setNumberOfPeople();
+		}
+		if(floor.locatePeople(userDefine.getNumberOfPeople())) {
+			int s = floor.getSize();
+			int personID = floor.getMaxPeople();
+			for (int r = 0; r < s; r++) {
+				for (int c = 0; c < s; c++) {
+					if (floor.getfloorPlan()[r][c] == 3) {
+						int[] initialLocation = { r, c };
+						Person p = new Person(personID--, 1, initialLocation);
+						people.add(p);
+					}
+				}
+			}
+		
+		}
+		return people;
+	}
+
+	public ArrayList<Person> getPeople() {
+		return people;
 	}
 	
 	/**using BREADTH-FIRST SEARCH
@@ -65,27 +98,29 @@ public class Planner {
 		return distanceWithWall;
 	}
 	
-	//A helper method to store all the people on the floor in an ArrayList
-	private ArrayList<Person> buildPeopleArray(){
-		ArrayList<Person> people = new ArrayList<>();		
-		if(!floor.locatePeople(userDefine.getNumberOfPeople())) {
-			System.out.println("The number of people exceeds the maximum");
-			userDefine.setNumberOfPeople();
+	
+
+	//helper method to find which exit among all the exits is the closet one for one person
+	private int[] getClosetExit(Person p) {
+		int r = p.getLocation()[0];
+		int c = p.getLocation()[1];
+	
+		HashMap<int[],Integer> distanceToEachExit = new HashMap<int[], Integer>();
+			
+		for (int[] oneExit: exits.getExitLocations()) {
+			int[][] distanceMapForExit = getDistanceWithWall(oneExit);
+			p.setDistanceToExit(distanceMapForExit[r][c]);
+			distanceToEachExit.put(oneExit,p.getDistanceToExit());
 		}
-		else {
-			int s = floor.getSize();
-			int personID = floor.getMaxPeople();
-			for(int r=0;r<s;r++) {
-				for(int c=0;c<s;c++) {
-					if (floor.getfloorPlan()[r][c]==3) {
-						int []initialLocation = {r,c};				
-						Person p = new Person(personID--,1,initialLocation);
-						people.add(p);
-					}
-				}
+		
+		int shortestDistance = Collections.min(distanceToEachExit.values());
+		int[] closetExit = new int[2];
+		for(Entry<int[], Integer> entry: distanceToEachExit.entrySet()) {
+			if(entry.getValue()==shortestDistance) {
+				closetExit = entry.getKey();
 			}
-		}	
-		return people;
+		}			
+		return closetExit;			
 	}
 
 
@@ -93,38 +128,16 @@ public class Planner {
 	 * @param A person
 	 * This method will take all people on the floor and return a HashMap outline closest exit each person should go
 	 */
-	public HashMap<Person, Exit> closestExit() {
-		ArrayList<Person> people = buildPeopleArray();
+	public HashMap<Person, int[]> closestExit() {			
+		HashMap<Person, int[]> personToExit = new HashMap<Person, int[]>(); 
 		
-		HashMap<Person, Exit> personToExit = new HashMap<Person, Exit>(); 
-		
-			}
-		}
-		
+		for(Person p:people) {
+			int[] closetExit = getClosetExit(p);
+			personToExit.put(p, closetExit);
+		}	
 		return personToExit;
 	}
-	/**
-	 * @param A person
-	 * This method will take one person and return the distance between this person and the exit he/she is going
-	 */
-	public int distanceToExit (Person p){  
-		int distance=0;
-		
-		//implement the method
-		
-		return distance;
-	}
 	
-	/**
-	 * @param everyone on the floor
-	 * This method will take everyone on the floor and sorted them by their distance to the target exit.
-	 */
-	public Person[] movePriority(Person[] allPeople) {
-		Person[] sortedPeople = new Person[userDefine.numberOfPeople()];
-		
-		//implement the method
-		
-		return sortedPeople;
-	}
+	
 }
 	
