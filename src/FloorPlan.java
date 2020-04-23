@@ -93,9 +93,15 @@ public class FloorPlan {
 	public boolean inbound(int r, int c) {
 		return (r>=0)&&(r<size)&&(c>=0)&&(c<size);
 	}
-    //check if there is people at (r,c)
-    public boolean hasPeopleAt(int r, int c) {
-    	return floorPlan[r][c] == 3;
+    //check if any people left on the floor
+    public boolean hasPeopleOnFloor() {
+    	boolean hasPeople = false;
+    	for(int r=0; r<size; r++) {
+    		for(int c=0; c<size;c++) {
+    			if(floorPlan[r][c]==3) hasPeople=true;
+    		}
+    	}
+    	return hasPeople;
     }
     //to get the maxpeople according to size
     public int getMaxPeople () {

@@ -23,6 +23,26 @@ public class Planner {
 		floor = new FloorPlan(userDefine.getFloorSize(), exits);
 		people = buildPeopleArray();
 	}
+	
+	
+	// getters of instance variables
+	public FloorPlan getFloor() {
+		return floor;
+	}
+
+
+
+	public UserInput getUserDefine() {
+		return userDefine;
+	}
+
+
+
+	public Exit getExits() {
+		return exits;
+	}
+
+
 
 	// method to store all the people on the floor in an ArrayList
 	private ArrayList<Person> buildPeopleArray() {
