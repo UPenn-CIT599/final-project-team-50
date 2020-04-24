@@ -18,7 +18,7 @@ class PersonTester {
 		
 		Person num1 = new Person(1,1.0,location);
 		
-        assertTrue(num1.getLocation() == location);
+        assertTrue(num1.getInitialLocation() == location);
     }
 	}
 

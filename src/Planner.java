@@ -19,7 +19,7 @@ public class Planner {
 	
 	public Planner() {
 		exits = new Exit();
-		exits.locationGenerator(userDefine.getNumberOfExits(), userDefine.getFloorSize());
+		exits.locationGenerator(userDefine.getNumberOfExits(), userDefine.getFloorSize()); //only locate exit on the floor once
 		floor = new FloorPlan(userDefine.getFloorSize(), exits);
 		people = buildPeopleArray();
 	}
@@ -46,26 +46,38 @@ public class Planner {
 
 	// method to store all the people on the floor in an ArrayList
 	private ArrayList<Person> buildPeopleArray() {
-		ArrayList<Person> people = new ArrayList<>();
-		while (!floor.locatePeople(userDefine.getNumberOfPeople())) {
+		ArrayList<Person> sortedPeople = new ArrayList<>();
+		ArrayList<Person> unsortedPeople = new ArrayList<>();
+		boolean locatePeopleSuccess = floor.locatePeople(userDefine.getNumberOfPeople()); //only locate people on the floor once by calling locatePeople method
+		while (!locatePeopleSuccess) {
 			System.out.println("The number of people exceeds the maximum");
 			userDefine.setNumberOfPeople();
+			locatePeopleSuccess = floor.locatePeople(userDefine.getNumberOfPeople());
 		}
-		if(floor.locatePeople(userDefine.getNumberOfPeople())) {
+		if(locatePeopleSuccess) {
 			int s = floor.getSize();
-			int personID = floor.getMaxPeople();
 			for (int r = 0; r < s; r++) {
 				for (int c = 0; c < s; c++) {
 					if (floor.getfloorPlan()[r][c] == 3) {
 						int[] initialLocation = { r, c };
-						Person p = new Person(personID--, 1, initialLocation);
-						people.add(p);
+						Person p = new Person(initialLocation); //create one person
+						unsortedPeople.add(p);
 					}
 				}
 			}
 		
 		}
-		return people;
+		for (Person p:unsortedPeople) {
+			int i = p.getInitialLocation()[0];
+			int j=p.getInitialLocation()[1];
+			int[] closetExit = getClosetExit(p);
+			int[][] distanceMap = getDistanceWithWall(closetExit);
+			p.setDistanceToExit(distanceMap[i][j]);
+		}
+		
+		Collections.sort(unsortedPeople); //set the priority that person with the shorter distance has the priority over person with longer distance
+		
+		return sortedPeople;
 	}
 
 	public ArrayList<Person> getPeople() {
@@ -77,8 +89,7 @@ public class Planner {
 	 * This method will take the location of one exit and generate a 2D array
 	 * to store the distance between this exit to all the available location (not a wall) on a floor map. 
 	 */
-
-	public int[][] getDistanceWithWall(int[] oneExit) {	
+	  public int[][] getDistanceWithWall(int[] oneExit) {	
 		int h=floor.getSize();
 		if(h==0)
 			return null;
@@ -120,10 +131,10 @@ public class Planner {
 	
 	
 
-	//helper method to find which exit among all the exits is the closet one for one person
-	private int[] getClosetExit(Person p) {
-		int r = p.getLocation()[0];
-		int c = p.getLocation()[1];
+	//helper method to find which exit is the closet one for one person
+	public int[] getClosetExit(Person p) {
+		int r = p.getInitialLocation()[0];
+		int c = p.getInitialLocation()[1];
 	
 		HashMap<int[],Integer> distanceToEachExit = new HashMap<int[], Integer>();
 			
@@ -142,6 +153,11 @@ public class Planner {
 		}			
 		return closetExit;			
 	}
+	
+	/**
+	 * @param A person
+	 * This method will take all people on the floor and return a HashMap outline closest exit each person should go
+	 */
 
 
 	/**

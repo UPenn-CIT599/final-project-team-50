@@ -3,41 +3,60 @@
  * The class tracks location,speed, direction of a person
  */
 
-public class Person {
+public class Person implements Comparable<Person> {
 
-	 int ID;
-	 double speed;
-	 String Direction;	
-	 int totalDistance;
-	 double totalTime;
+	 //int ID;
+	 //double speed;
+	 //String Direction;	
+	 //int totalDistance;
+	 //double totalTime;
 	 
-	 private int[] Location=new int[2];//two numbers to track ppl's location (row and column axis)
-	 private int distanceToExit;
+	 private int[] initialLocation=new int[2];//two numbers to track ppl's location (row and column axis)
+	 private int[] currentLocation=new int[2];
+	 private Integer distanceToExit;
 	 
-	 public void setDistanceToExit(int distanceToExit) {
+	 public void setDistanceToExit(Integer distanceToExit) {
 		this.distanceToExit = distanceToExit;
 	}
 
-
-	public int getDistanceToExit() {
-		return distanceToExit;
+	public int[] getInitialLocation() {
+		return this.initialLocation;
 	}
 
-
+	public Integer getDistanceToExit() {
+		return distanceToExit;
+	}
 	
+	
+	public int compareTo(Person p) {
+		return this.getDistanceToExit().compareTo(p.getDistanceToExit());
+	}
+	
+	public int[] getCurrentLocation() {
+		return currentLocation;
+	}
+
+	public void setCurrentLocation(int r, int c) {
+		this.currentLocation[0] = r;
+		this.currentLocation[1] = c;
+	}
+
 	 
 	//constructor
-	 Person(int ID, double speed, int[] initialLocation) {
-		 this.ID=ID;
-		 this.speed=speed;
-		 //this.Direction=Direction;
-		 this.Location=initialLocation;
-		 this.Direction = "NORTH";//defaults as up/north
-		 this.totalDistance=0;
-		 this.totalTime=0.0;
+	 Person(int[] initialLocation) {
+		 //this.ID=ID;
+		 //this.speed=speed;
+		 //this.Direction=Direction;	
+		 //this.Direction = "NORTH";//defaults as up/north
+		 //this.totalDistance=0;
+		 //this.totalTime=0.0;
+		 this.initialLocation=initialLocation;
+		 this.currentLocation=initialLocation;
 		 this.distanceToExit=0;
 
 	 }
+
+	
 
 	 /**
 	  * method move controls the person to move to a direction 
@@ -48,7 +67,7 @@ public class Person {
 	  * 
 	  */
 	 
-	 void move(String MoveDirection, int Distance) {
+	/* void move(String MoveDirection, int Distance) {
 		 Direction=MoveDirection;
 		 
 		 this.totalDistance=this.totalDistance+Distance;
@@ -59,7 +78,7 @@ public class Person {
 				 
 		 
 	 }
-
+*/
 
 	 /**
 	  * method changeDirection takes a new direction and change the person's current location
@@ -67,7 +86,7 @@ public class Person {
 	  * 
 	  */
 	 
-	 
+	/* 
 	 void changeDirection(String NewDirection) {
 		 
 		 if(NewDirection.toUpperCase().equals("RIGHT")) {
@@ -106,7 +125,7 @@ public class Person {
 	  * @param NewDirection
 	  * 
 	  */
-	 void updateLocation(String moveDirection, int distance) {
+	/* void updateLocation(String moveDirection, int distance) {
 		 
 		 
 		 if(moveDirection.toUpperCase().equals("NORTH")) {
@@ -127,13 +146,11 @@ public class Person {
 		 
 		 
 	 }
+	
+	*/ 
+
 	 
 	 
-	 //get location
-	 
-	  public int[] getLocation() {
-	        return this.Location;
-	    }
 }
 	
 	
