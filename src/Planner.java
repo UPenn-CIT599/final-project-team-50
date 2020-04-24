@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -18,6 +19,11 @@ public class Planner {
 	private ArrayList<Person> people;
 	
 	public Planner() {
+		userDefine = new UserInput();
+		userDefine.setFloorSize();
+		userDefine.setNumberOfExit();
+		userDefine.setNumberOfPeople();
+		
 		exits = new Exit();
 		exits.locationGenerator(userDefine.getNumberOfExits(), userDefine.getFloorSize()); //only locate exit on the floor once
 		floor = new FloorPlan(userDefine.getFloorSize(), exits);
@@ -46,7 +52,6 @@ public class Planner {
 
 	// method to store all the people on the floor in an ArrayList
 	private ArrayList<Person> buildPeopleArray() {
-		ArrayList<Person> sortedPeople = new ArrayList<>();
 		ArrayList<Person> unsortedPeople = new ArrayList<>();
 		boolean locatePeopleSuccess = floor.locatePeople(userDefine.getNumberOfPeople()); //only locate people on the floor once by calling locatePeople method
 		while (!locatePeopleSuccess) {
@@ -54,19 +59,18 @@ public class Planner {
 			userDefine.setNumberOfPeople();
 			locatePeopleSuccess = floor.locatePeople(userDefine.getNumberOfPeople());
 		}
-		if(locatePeopleSuccess) {
-			int s = floor.getSize();
-			for (int r = 0; r < s; r++) {
-				for (int c = 0; c < s; c++) {
-					if (floor.getfloorPlan()[r][c] == 3) {
-						int[] initialLocation = { r, c };
-						Person p = new Person(initialLocation); //create one person
-						unsortedPeople.add(p);
-					}
+
+		int s = floor.getSize();
+		for (int r = 0; r < s; r++) {
+			for (int c = 0; c < s; c++) {
+				if (floor.getfloorPlan()[r][c] == 3) {
+					int[] initialLocation = { r, c };
+					Person p = new Person(initialLocation); //create one person
+					unsortedPeople.add(p);
 				}
 			}
-		
 		}
+
 		for (Person p:unsortedPeople) {
 			int i = p.getInitialLocation()[0];
 			int j=p.getInitialLocation()[1];
@@ -77,7 +81,7 @@ public class Planner {
 		
 		Collections.sort(unsortedPeople); //set the priority that person with the shorter distance has the priority over person with longer distance
 		
-		return sortedPeople;
+		return unsortedPeople;
 	}
 
 	public ArrayList<Person> getPeople() {
@@ -95,36 +99,46 @@ public class Planner {
 			return null;
 		int l=floor.getSize();
 		boolean[][] visited = new boolean[h][l];
+		visited[oneExit[0]][oneExit[1]] = true;
 		int[][] distanceWithWall = new int[h][l];
-		Queue<int[]> queue = new LinkedList<>();
-		
-		queue.add(oneExit);
+		ArrayList<int[]> layer = new ArrayList<>();
+		layer.add(oneExit);
+		ArrayList<int[]> nextLayer = new ArrayList<>();
+					
 		int distance=0;
-		while(!queue.isEmpty()) {
-			int[] curVertex = queue.remove();
-			int row = curVertex[0];
-			int col = curVertex[1];
-			int[]leftVertex = {row,col-1};
-			int[]rightVertex = {row,col+1};
-			int[]upVertex = {row-1,col};
-			int[]downVertex = {row+1,col};
-			
-			if (row < 0 || col < 0 || row >= h || col >= l || visited[row][col])
-                continue;
-			
-			visited[row][col]=true;
-			if(floor.getfloorPlan()[row][col]==1) {
-				distanceWithWall[row][col]=-1; // if there is a wall on that point, then the distance return -1.
-			}
-			else {
-				distanceWithWall[row][col]=distance;
-				distance++;
-			}
+		while(!layer.isEmpty()) {
+			for (int i = 0; i < layer.size(); ++i) {
+				int[] curVertex = layer.get(i);
+				int row = curVertex[0];
+				int col = curVertex[1];
 				
-			queue.add(leftVertex); //go left
-            queue.add(rightVertex); //go right
-            queue.add(upVertex); //go up
-            queue.add(downVertex); //go down		
+				if (floor.getfloorPlan()[row][col]==1) {
+					distanceWithWall[row][col]=-1; // if there is a wall on that point, then the distance return -1.
+					continue;
+				} else {
+					distanceWithWall[row][col]=distance;
+				}
+				
+				int[] delta_row = {-1, 1, 0, 0};
+				int[] delta_col = {0, 0, -1, 1};
+
+				for (int k = 0; k < 4; ++k) {
+					int new_row = delta_row[k] + row;
+					int new_col = delta_col[k] + col;
+					if (new_row >= 0 && new_row < l && new_col >= 0 && new_col < l && !visited[new_row][new_col]) {
+						int[] temp = {new_row, new_col};
+						nextLayer.add(temp);
+						visited[new_row][new_col] = true;
+					}
+				}
+			}
+			layer.clear();
+			for (int [] item: nextLayer) {
+				int[] temp = {item[0], item[1]};
+				layer.add(temp);
+			}
+			nextLayer.clear();
+			distance++;
 		}		
 		return distanceWithWall;
 	}
@@ -139,9 +153,8 @@ public class Planner {
 		HashMap<int[],Integer> distanceToEachExit = new HashMap<int[], Integer>();
 			
 		for (int[] oneExit: exits.getExitLocations()) {
-			int[][] distanceMapForExit = getDistanceWithWall(oneExit);
-			p.setDistanceToExit(distanceMapForExit[r][c]);
-			distanceToEachExit.put(oneExit,p.getDistanceToExit());
+			int[][] distanceMapForExit = getDistanceWithWall(oneExit);			
+			distanceToEachExit.put(oneExit,distanceMapForExit[r][c]);
 		}
 		
 		int shortestDistance = Collections.min(distanceToEachExit.values());

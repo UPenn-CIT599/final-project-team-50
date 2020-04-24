@@ -25,45 +25,43 @@ public class FloorPlan {
 		
 		//core
 		//r = 1/3 * size
-		for(int c = 1/3 * size; c <= 2/3 * size; c++ ) {
-			floorPlan[1/3 * size][c] = 1;
+		for(int c = size/3; c <= 2 * (size/3); c++ ) {
+			floorPlan[size / 3][c] = 1;
 		}
 		
 		//r = 2/3 * size
-		for(int c = 1/3 * size; c <= 2/3 * size; c++ ) {
-			floorPlan[2/3 * size][c] = 1;
+		for(int c = size/3; c <= 2*(size/3); c++ ) {
+			floorPlan[2*(size/3)][c] = 1;
 		}
 		
 		//c = 1/3 * size
-		for(int r = 1/3 * size; r <= 2/3 * size; r++ ) {
-			if(r == 1/2 * size) {
+		for(int r = size/3; r <= 2*(size/3); r++ ) {
+			if(r == size/2) {
 				continue;
 			}
-			floorPlan[r][1/3 * size] = 1;
+			floorPlan[r][size/3] = 1;
 		}
 		
 		//c = 2/3 * size
-		for(int r = 1/3 * size; r <= 2/3 * size; r++) {
-			if(r == 1/2 * size) {
+		for(int r = size/3; r <= 2*(size/3); r++) {
+			if(r == size/2) {
 				continue;
 			}
-			floorPlan[r][2/3 * size] = 1;
+			floorPlan[r][2*(size/3)] = 1;
 		}
-		
+				
 		//perimeter
 		for(int c=0; c < size; c++) {
 			for(int r=0; r < size; r++) {
 				if ((r==0)||(r==size-1)||(c==0)||(c==size-1)) {
 					floorPlan[r][c] = 1;
 				}
-				else {
-					floorPlan[r][c] = 0;
-				}
 			}
 		}
 		
 		//Save the exit in from Exit class in to floorPlan ArrayList
 		ArrayList<int[]> exitLocations = exit.getExitLocations();
+		System.out.println(exitLocations);
 		for(int[] point: exitLocations) {
 			int r = point[0];
 			int c = point[1];
@@ -132,5 +130,4 @@ public class FloorPlan {
     	}
     	return true;
     }
-
 }

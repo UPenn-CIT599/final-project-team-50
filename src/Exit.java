@@ -43,38 +43,40 @@ public class Exit {
 
 		 //then take the first numExits for exits' location consideration
 		 //numbering based on clockwise. The upper left being (1,1) 
-		for(int i=1;i<=numExit;i++) {
-			int temp=randomList.get(i);
-					
+		boolean[] visited = new boolean[randomList.size()]; 
+		for(int i = 0;i < numExit; i++) {
+			int index = i;
+			int temp=randomList.get(index);
+			while ((temp - 1) % (FloorSize - 1) == 0 || visited[temp-1]) {
+				index++;
+				if (index >= randomList.size()) {
+					index = 0;
+				}
+				temp=randomList.get(index);
+			}
+			visited[temp-1] = true;
 			
-			if(temp<=(FloorSize-1)) {
+			if(temp<=(FloorSize)) {
 				
-				int[] arr= {1,temp};
+				int[] arr= {0, temp - 1};
 				ExitLocations.add(i,arr);
 				
-			}else if(temp<=(2*FloorSize-2)) {
+			}else if(temp<= 2*FloorSize - 1) {
 				
-				int[] arr= {temp-FloorSize+1,FloorSize};
-				
+				int[] arr= {temp-FloorSize, FloorSize - 1};
 				ExitLocations.add(i,arr);
 
-			}else if(temp<=(3*FloorSize-3)) {
+			}else if(temp <= 3*FloorSize - 2) {
 				
-				int[] arr= {FloorSize,3*FloorSize-temp-1};
+				int[] arr= {FloorSize - 1, 3*FloorSize-temp-2};
 				ExitLocations.add(i,arr);
 				
 			}else {
 				
-				int[] arr= {4*FloorSize-temp-2,1};
+				int[] arr= {4*FloorSize-temp-3, 0};
 				ExitLocations.add(i,arr);
 			}
-		
-		
 		}
-		 
-		 
-		 
-
 	 }
 	
 	//return location for exits

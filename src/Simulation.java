@@ -46,13 +46,30 @@ public class Simulation {
 						jNext = jCur + 1;
 					}
 				}
-
+			
+				Plan.getFloor().getfloorPlan()[iCur][jCur] = 0;
+				Plan.getFloor().getfloorPlan()[iNext][jNext] = 3;
+				
 				iCur = iNext;
 				jCur = jNext;
 				p.setCurrentLocation(iCur, jCur);
 				p.setDistanceToExit(distanceGrid[iCur][jCur]);
+				
+				
 			}
 			timer++;
+			
+			int [][] res = Plan.getFloor().getfloorPlan();
+			for (int i = 0; i < res.length; ++i) {
+				for (int j = 0; j < res[i].length; ++j) {
+					if (res[i][j] == 0) {
+						System.out.print(" ");
+					} else {
+						System.out.print(res[i][j]);
+					}
+				}
+				System.out.println();
+			}
 		}
 		System.out.println("The escape takes " + timer + "mins");
 	}
