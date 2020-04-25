@@ -21,14 +21,14 @@ public class UserInput {
 	}
 
 	public void setNumberOfPeople() {
-		System.out.println("Please enter the number of people");
+		System.out.println("Please enter the number of people: ");
 		Scanner people = new Scanner(System.in);
 		int numOfPeople = people.nextInt();
 		this.numberOfPeople = numOfPeople;
 	}
 
 	public void setNumberOfExit() {
-		System.out.println("Please enter the number of exits");
+		System.out.println("Please enter the number of exits (maximum 8): ");
 		Scanner exits = new Scanner(System.in);
 		int numOfExits = exits.nextInt();
 		this.numberOfExits = numOfExits;
@@ -36,7 +36,7 @@ public class UserInput {
 	}
 
 	public void setFloorSize() {
-		System.out.println("Please enter the size of floor");
+		System.out.println("Please enter the size of floor: ");
 		Scanner size = new Scanner(System.in);
 		int floorSize = size.nextInt();
 		this.floorSize = floorSize;
