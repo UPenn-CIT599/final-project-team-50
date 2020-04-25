@@ -88,6 +88,8 @@ public class Planner {
 		return people;
 	}
 	
+	
+	
 	/**using BREADTH-FIRST SEARCH
 	 * @param location of exit
 	 * This method will take the location of one exit and generate a 2D array
