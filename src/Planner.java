@@ -116,7 +116,7 @@ public class Planner {
 			for (int i = 0; i < layer.size(); ++i) {
 				int[] curVertex = layer.get(i);
 				int row = curVertex[0];
-				int col = curVertex[1];000
+				int col = curVertex[1];
 				
 				if (floor.getfloorPlan()[row][col]==1) {
 					distanceWithWall[row][col]=-1; // if there is a wall on that point, then the distance return -1.

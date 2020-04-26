@@ -128,7 +128,7 @@ public class Simulation {
 		return simulationRes;
 	}
 
-	private Exit optimalExitLocation(HashMap<Exit, Integer> results) {
+	public Exit optimalExitLocation(HashMap<Exit, Integer> results) {
 		Exit bestSolution = null;
 		int shortestTime = Collections.min(results.values());
 		for (Entry<Exit, Integer> entry : results.entrySet()) {
