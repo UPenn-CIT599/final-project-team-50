@@ -9,15 +9,13 @@ import java.util.List;
  */
 
 public class Exit {
-	// int numExit;//user input
-	// int FloorSize;//defined in simulation class
+
 	private ArrayList<int[]> ExitLocations;
 
 	// constructor
 	public Exit() {
 
-		// this.numExit=numExit;
-		// this.FloorSize=FloorSize;
+	
 		this.ExitLocations = new ArrayList<int[]>();
 
 	}
