@@ -14,22 +14,24 @@ import java.util.Queue;
  */
 public class Planner {
 	private FloorPlan floor;
-	private UserInput userDefine;
+//	private UserInput userDefine;
 	private Exit exits;
 	private ArrayList<Person> people;
+	private Simulation simulation;
+	private int numberOfPeople;
 	
-	public Planner() {
-		userDefine = new UserInput();
-		userDefine.setFloorSize();
-		userDefine.setNumberOfExit();
-		userDefine.setNumberOfPeople();
-		
+	public Planner(int floorSize, int exitAmount, int peopleAmount) {
+//		userDefine = new UserInput();
+//		userDefine.setFloorSize();
+//		userDefine.setNumberOfExit();
+//		userDefine.setNumberOfPeople();	
 		exits = new Exit();
-		exits.locationGenerator(userDefine.getNumberOfExits(), userDefine.getFloorSize()); //only locate exit on the floor once
-		floor = new FloorPlan(userDefine.getFloorSize(), exits);
+		exits.locationGenerator(exitAmount, floorSize); //only locate exit on the floor once
+		floor = new FloorPlan(floorSize, exits);
+		numberOfPeople = peopleAmount;
 		people = buildPeopleArray();
 	}
-	
+
 	
 	// getters of instance variables
 	public FloorPlan getFloor() {
@@ -38,9 +40,9 @@ public class Planner {
 
 
 
-	public UserInput getUserDefine() {
-		return userDefine;
-	}
+//	public UserInput getUserDefine() {
+//		return userDefine;
+//	}
 
 
 
@@ -53,24 +55,26 @@ public class Planner {
 	// method to store all the people on the floor in an ArrayList
 	private ArrayList<Person> buildPeopleArray() {
 		ArrayList<Person> unsortedPeople = new ArrayList<>();
-		boolean locatePeopleSuccess = floor.locatePeople(userDefine.getNumberOfPeople()); //only locate people on the floor once by calling locatePeople method
-		while (!locatePeopleSuccess) {
-			System.out.println("The number of people exceeds the maximum");
-			userDefine.setNumberOfPeople();
-			locatePeopleSuccess = floor.locatePeople(userDefine.getNumberOfPeople());
-		}
+		boolean locatePeopleSuccess = floor.locatePeople(numberOfPeople); //only locate people on the floor once by calling locatePeople method
+//		while (!locatePeopleSuccess) {
+//			System.out.println("The number of people exceeds the maximum");
+//			userDefine.setNumberOfPeople();
+//			locatePeopleSuccess = floor.locatePeople(userDefine.getNumberOfPeople());
+//		}
 
-		int s = floor.getSize();
-		for (int r = 0; r < s; r++) {
-			for (int c = 0; c < s; c++) {
-				if (floor.getfloorPlan()[r][c] == 3) {
-					int[] initialLocation = { r, c };
-					Person p = new Person(initialLocation); //create one person
-					unsortedPeople.add(p);
+		if(locatePeopleSuccess) {
+			int s = floor.getSize();
+			for (int r = 0; r < s; r++) {
+				for (int c = 0; c < s; c++) {
+					if (floor.getfloorPlan()[r][c] == 3) {
+						int[] initialLocation = { r, c };
+						Person p = new Person(initialLocation); //create one person
+						unsortedPeople.add(p);
+					}
 				}
 			}
 		}
-
+		
 		for (Person p:unsortedPeople) {
 			int i = p.getInitialLocation()[0];
 			int j=p.getInitialLocation()[1];
@@ -112,7 +116,7 @@ public class Planner {
 			for (int i = 0; i < layer.size(); ++i) {
 				int[] curVertex = layer.get(i);
 				int row = curVertex[0];
-				int col = curVertex[1];
+				int col = curVertex[1];000
 				
 				if (floor.getfloorPlan()[row][col]==1) {
 					distanceWithWall[row][col]=-1; // if there is a wall on that point, then the distance return -1.

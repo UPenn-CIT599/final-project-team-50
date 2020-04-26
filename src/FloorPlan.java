@@ -57,7 +57,6 @@ public class FloorPlan {
 
 		// Save the exit in from Exit class in to floorPlan ArrayList
 		ArrayList<int[]> exitLocations = exit.getExitLocations();
-		System.out.println(exitLocations);
 		for (int[] point : exitLocations) {
 			int r = point[0];
 			int c = point[1];

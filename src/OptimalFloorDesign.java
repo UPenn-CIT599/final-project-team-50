@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class Floor_Interface extends JFrame {
+public class OptimalFloorDesign extends JFrame {
 	
 	private JPanel tiles;
 	private JButton[] buttons;
@@ -11,10 +11,11 @@ public class Floor_Interface extends JFrame {
 	public JPanel getTilePanel() {return tiles;}
 	
 	//Constructor builds the panel
-	public Floor_Interface(Planner planner) {
+	public OptimalFloorDesign(FloorPlan p) {
+	
 	
 		// Create the panel with the floor tiles on it
-		createFloorPlanPanel(planner);
+		createFloorPlanPanel(p);
 
 		// Layout the rest of the window's components
 		setupComonnets();
@@ -25,8 +26,8 @@ public class Floor_Interface extends JFrame {
     }
 
 	//Build the initial tile to show the floor
-	private void createFloorPlanPanel (Planner p) {
-		FloorPlan f = p.getFloor();
+	private void createFloorPlanPanel (FloorPlan f) {
+	
 		buttons = new JButton[f.getSize()*f.getSize()];
 		tiles = new JPanel();
 		tiles.setLayout(new GridLayout(f.getSize(),f.getSize()));
@@ -60,10 +61,6 @@ public class Floor_Interface extends JFrame {
         layout.setConstraints(tiles, layoutConstraints);
         getContentPane().add(tiles);
 	}
-	
-	public static void main(String args[]) {
-     	new Floor_Interface();
-     }
 
 	
 }
