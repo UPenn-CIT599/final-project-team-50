@@ -145,9 +145,9 @@ public class SaftyMapApp extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-public static void main(String[] args) {
-	SaftyMapApp frame = new SaftyMapApp();
-}
+	public static void main(String[] args) {
+		SaftyMapApp frame = new SaftyMapApp();
+	}
 	
 
 }
