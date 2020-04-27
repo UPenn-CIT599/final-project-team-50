@@ -1,59 +1,24 @@
 # Final-project-team-50
 Team Member: Chi Zhang, Fei Han, Yao Yao
 
-Class:
-	UserInput
-	Exit
-	Person
-	FloorPlan
-	Planner
-	Simulation(main)
-	
-Input:
-	1. Number of people on the floor
-	2. Number of exit
-	
-Output:
-	The time it will take for everyone exit the floor
-	
+This program is fire escape simulation that takes user's inputs of floor size, number of people and number of exit, and provide with the most efficient plan for everyone to approach the closest exit and escape in the shortest period of time. The simulation can be visulised, so user can see how people are moving at each time point.
 
-Detail of Each Class:
+Some restrictions were took into considertaion to simulate the real life as much as possible. The restritions includes:
+1. No one can move to the same spot at any time
+2. There are walls locate in the middle of floor so may impede people's move
 
-*UserInput:
-Scan user input of a) number of people and b) number of exit
-(restrict the number of exit to be less then 8)
+An interface has also been developed, so it can easlily collect information from user in a more frinendly fasion. The result will be printed out in the console.
 
-*Exit:
-- Location (Point)
-- Name (String)
-- Color (color) - for the further use of Swing
-1. Random generate the exit location(argument is Number of exit input by user, return void)
+The classes used in the program includes:
+Exit
+Person
+FloorPlan
+Planner
+Simulation 
+SafyMapyApp (Interface)
 
-*Person:
-- Location (Point)
-- Name (String)
-- Color (color) - for the further use of Swing
+We also performed JUnit test when necessary to make sure the program is running appropriately. 
 
-*FloorPlan:
-- Size (int) //assume the floor is a (N x N) square
-- FloorPlan (int [][])
-- Exits (Exit[])
-- People (Person[])
-1. Set up the floor design with wall placed (no argument, return void)
-2. Locate people (argument is the Number of people input by user, return void)
-3. Traverse the floor and check if any people on the floor
-
-*Planner:
--Floor (FloorPlan)
--Exit (Exit)
--Person (Person)
-1. Generate an Distance Map represent the distance between one exit to all the available vertices on the floor (argument Exit, return int[][])
-2. Build a Person-Exit HashMap, once establish one person will only go to his target exit (argument FloorPlan, return HashMap<Person, Exit>)
-	a. For each exit on the floor, generate their Distance Map
-	b. For each person on the floor, compare his distance to each exit and find the closest exit.
-	c. For all the people on the floor, build the Person-Exit relationship.
-3. Calculate the distance between one person to his target Exit (argument Person, return distance)
-4. Based on the distance each person to his target exit, determine the priority that once two people meet the one closer to his target exit will move first (argument Person[])
 
 
  
