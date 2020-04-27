@@ -55,7 +55,7 @@ public class Planner {
 		}
 		else {
 			System.out.println("The number of people exceeds maximum");
-			System.out.println("You can accommodate at maximum "+ floor.getMaxPeople()+ " people on your floor");
+			System.out.println("You can accommod at maximum "+ floor.getMaxPeople()+ " people on your floor");
 		}
 
 		for (Person p : unsortedPeople) {
@@ -133,7 +133,11 @@ public class Planner {
 		return distanceWithWall;
 	}
 
-	// helper method to find which exit is the closet one for one person
+	/**
+	 * @param one Person on the floor
+	 * this method to return the closet exit for one person
+	 * once find the closet exit, this person will move toward it
+	 */
 	public int[] getClosetExit(Person p) {
 		int r = p.getInitialLocation()[0];
 		int c = p.getInitialLocation()[1];
