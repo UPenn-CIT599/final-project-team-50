@@ -160,8 +160,9 @@ public class Planner {
 	}
 
 	/**
-	 * @param A person This method will take all people on the floor and return a
-	 *          HashMap outline closest exit each person should go
+	 * @param A person 
+	 *This method will take all people on the floor and return a
+	 * HashMap outline closest exit each person should go
 	 */
 	public HashMap<Person, int[]> closestExit() {
 		HashMap<Person, int[]> personToExit = new HashMap<Person, int[]>();
