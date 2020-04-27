@@ -17,7 +17,7 @@ Planner
 Simulation 
 SafyMapyApp (Interface)
 
-We also performed JUnit test when necessary to make sure the program is running appropriately. 
+We also performed JUnit test when necessary to ensure the program is running appropriately. 
 
 
 
