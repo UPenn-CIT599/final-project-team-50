@@ -4,6 +4,8 @@ import java.util.Random;
 public class FloorPlan {
 
 	/*
+	 * @author chizhang
+	 * This is to initiate the floorplan
 	 * in the ArrayList floorPlan void = 0 wall = 1 exit = 2 people = 3
 	 */
 

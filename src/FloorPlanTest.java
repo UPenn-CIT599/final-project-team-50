@@ -2,9 +2,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/*
+*@author chizhang
+*This is Junit test methods in FloorPlan Class
+
+*/
 class FloorPlanTest {
 	@Test
-	public void testLocatePeopleFailed () {
+	//when numPeople <= 86, people can be located successfully
+	public void testLocatePeopleSuccess () {
 		int k = 12;
 		Exit exits = new Exit();
 		
@@ -17,7 +23,8 @@ class FloorPlanTest {
 	
 	
 	@Test
-	public void testLocatePeopleSucess () {
+	//when numPeople > 86, people cannot be located, it exceed the max ppl number
+	public void testLocatePeopleFail () {
 		int k = 12;
 		Exit exits = new Exit();
 		
