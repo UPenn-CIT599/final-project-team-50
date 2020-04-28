@@ -1,0 +1,21 @@
+Project Name: Fire Escape Simulation
+
+Desciption: This program is fire escape simulation that takes user's inputs of floor size, number of people and number of exit, and provide with the most efficient plan for everyone to approach the closest exit and escape in the shortest period of time. The simulation can be visulised, so user can see how people are moving at each time point.
+Some restrictions were took into considertaion to simulate the real life as much as possible. The restritions includes:
+1)No one can move to the same spot at any time
+2)There are walls locate in the middle of floor so may impede people's move
+
+Work Breakdown:
+Design of Class - discussed together
+Coding of Class - 
+Person & PersonTest - Fei Han
+Exit & ExitTest - Fei Han
+FloorPlaner & FloorPlannerTest - Chi Zhang
+Planner & PlannerTest - Yao Yao
+Simulation - Yao Yao
+SaftyMapApp - Chi Zhang/Yao Yao
+Project Presentation - Fei Han
+
+github repository:
+https://github.com/UPenn-CIT599/final-project-team-50
+
